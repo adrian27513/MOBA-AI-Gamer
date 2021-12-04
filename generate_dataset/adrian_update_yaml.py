@@ -1,6 +1,6 @@
 import yaml
 
-f = open("C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/output/LeagueAI.labels", "r")
+f = open("C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/output/LeagueAI.labels", "r")
 num = 0
 names = []
 for x in f:

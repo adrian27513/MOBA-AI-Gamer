@@ -30,7 +30,7 @@ split = 1000
 dataset_size = 2000
 
 # Directory of the dataset (parent directory of jpegs and labels folder)
-dataset_path = "C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/output"
+dataset_path = "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/output"
 
 # Randomly shuffle the list of samples in the dataset and select random test and train samples
 datasets = listdir(dataset_path+"/images/")
@@ -42,16 +42,16 @@ print(datasets_valid)
 
 for i in range(0,len(datasets_train)):
     os.rename(dataset_path+"/images/"+datasets_train[i],
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/data/images/train/"+datasets_train[i])
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/images/train/"+datasets_train[i])
     os.rename(dataset_path+"/labels/"+datasets_train[i].replace(".jpg",".txt"),
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/data/labels/train/"+datasets_train[i].replace(".jpg",".txt"))
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/labels/train/"+datasets_train[i].replace(".jpg",".txt"))
     print("Adding: " + datasets_train[i].replace(".jpg", ""))
 
 for i in range(0,len(datasets_valid)):
     os.rename(dataset_path+"/images/"+datasets_valid[i],
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/data/images/valid/"+datasets_valid[i])
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/images/valid/"+datasets_valid[i])
     os.rename(dataset_path+"/labels/"+datasets_valid[i].replace(".jpg",".txt"),
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/data/labels/valid/"+datasets_valid[i].replace(".jpg",".txt"))
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/labels/valid/"+datasets_valid[i].replace(".jpg",".txt"))
     print("Adding: " + datasets_valid[i].replace(".jpg", ""))
 
 
