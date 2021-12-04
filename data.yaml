@@ -20,5 +20,5 @@ names:
 - blue_super
 - blue_super_dead
 nc: 20
-train: .\data\images\train
-val: .\data\images\valid
+train: /content/LeagueAIYoloV5/data/images/train
+val: /content/LeagueAIYoloV5/data/images/valid
