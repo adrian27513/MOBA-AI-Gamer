@@ -20,5 +20,5 @@ names:
 - blue_super
 - blue_super_dead
 nc: 20
-train: C:\Users\Adrian\PycharmProjects\yolov5\data\images\train
-val: C:\Users\Adrian\PycharmProjects\yolov5\data\images\valid
+train: .\data\images\train
+val: .\data\images\valid
