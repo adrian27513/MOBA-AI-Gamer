@@ -12,7 +12,7 @@ import random
 
 ####### Params ############
 # Print out the status messages and where stuff is placed
-verbose = True
+verbose = False
 # Important the leaf directories have to be called masked_champions, redMelee, masked_towers or you have to change add_object to write the object classes properly
 # Directory in which the masked object images are located
 masked_images_dir = "E:\\Adrian\\LeagueAI\\maskedChamps"
@@ -48,7 +48,7 @@ output_dir = "output"
 # Prints a box around the placed object in red (for debug purposes)
 print_box = False
 # Size of the datasets the program should generate
-dataset_size = 2000
+dataset_size = 10000
 # Beginning index for naming output files
 start_index = 0
 # How many characters should be added minimum/maximum to each sample
