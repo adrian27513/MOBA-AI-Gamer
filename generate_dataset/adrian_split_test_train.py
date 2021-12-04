@@ -42,16 +42,16 @@ print(datasets_valid)
 
 for i in range(0,len(datasets_train)):
     os.rename(dataset_path+"/images/"+datasets_train[i],
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/images/train/"+datasets_train[i])
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/data/images/train/"+datasets_train[i])
     os.rename(dataset_path+"/labels/"+datasets_train[i].replace(".jpg",".txt"),
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/labels/train/"+datasets_train[i].replace(".jpg",".txt"))
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/data/labels/train/"+datasets_train[i].replace(".jpg",".txt"))
     print("Adding: " + datasets_train[i].replace(".jpg", ""))
 
 for i in range(0,len(datasets_valid)):
     os.rename(dataset_path+"/images/"+datasets_valid[i],
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/images/valid/"+datasets_valid[i])
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/data/images/valid/"+datasets_valid[i])
     os.rename(dataset_path+"/labels/"+datasets_valid[i].replace(".jpg",".txt"),
-              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/data/labels/valid/"+datasets_valid[i].replace(".jpg",".txt"))
+              "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/data/labels/valid/"+datasets_valid[i].replace(".jpg",".txt"))
     print("Adding: " + datasets_valid[i].replace(".jpg", ""))
 
 
