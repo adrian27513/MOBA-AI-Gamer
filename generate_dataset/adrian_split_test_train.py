@@ -27,7 +27,7 @@ from os.path import isfile, join
 # Set number of datasets that will be randomly selected for test dataset
 split = 1000
 # Overall size of the dataset
-dataset_size = 10000
+dataset_size = 11000
 
 # Directory of the dataset (parent directory of jpegs and labels folder)
 dataset_path = "C:/Users/Adrian/PycharmProjects/AdrianLeagueAIYoloV5/generate_dataset/output"

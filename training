@@ -1,3 +1,3 @@
-python ./yolov5/train.py --img 448 --batch 16 --epochs 3 --data=data.yaml --cfg=yolov5s6.yaml --weights '' --name results --cache
+python ./yolov5/train.py --img 448 --batch 16 --epochs 30 --data=data.yaml --cfg=yolov5s6.yaml --weights=LeagueAIWeights --name results --cache
 
-print('Setup complete. Using torch   %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) if torch.cuda.is_available() else 'CPU'))
+python print('Setup complete. Using torch   %s %s' % (torch.__version__, torch.cuda.get_device_properties(0) if torch.cuda.is_available() else 'CPU'))

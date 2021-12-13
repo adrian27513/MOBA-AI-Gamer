@@ -48,7 +48,7 @@ output_dir = "output"
 # Prints a box around the placed object in red (for debug purposes)
 print_box = False
 # Size of the datasets the program should generate
-dataset_size = 10000
+dataset_size = 11000
 # Beginning index for naming output files
 start_index = 0
 # How many characters should be added minimum/maximum to each sample
