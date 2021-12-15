@@ -20,11 +20,11 @@ import torch.nn as nn
 from PIL import Image
 from torch.cuda import amp
 
-from utils.datasets import exif_transpose, letterbox
-from utils.general import (LOGGER, check_requirements, check_suffix, colorstr, increment_path, make_divisible,
+from yolov5.utils.datasets import exif_transpose, letterbox
+from yolov5.utils.general import (LOGGER, check_requirements, check_suffix, colorstr, increment_path, make_divisible,
                            non_max_suppression, scale_coords, xywh2xyxy, xyxy2xywh)
-from utils.plots import Annotator, colors, save_one_box
-from utils.torch_utils import copy_attr, time_sync
+from yolov5.utils.plots import Annotator, colors, save_one_box
+from yolov5.utils.torch_utils import copy_attr, time_sync
 
 
 def autopad(k, p=None):  # kernel, padding
@@ -303,7 +303,7 @@ class DetectMultiBackend(nn.Module):
                 d = json.loads(extra_files['config.txt'])  # extra_files dict
                 stride, names = int(d['stride']), d['names']
         elif pt:  # PyTorch
-            from models.experimental import attempt_load  # scoped to avoid circular import
+            from yolov5.models.experimental import attempt_load  # scoped to avoid circular import
             model = attempt_load(weights, map_location=device)
             stride = int(model.stride.max())  # model stride
             names = model.module.names if hasattr(model, 'module') else model.names  # get class names
