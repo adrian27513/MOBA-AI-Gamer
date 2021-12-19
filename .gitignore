@@ -5,3 +5,6 @@
 /detection/runs/
 /LeagueAIWeights.pt
 /runs/
+/generate_dataset/MaskedChamps/
+/generate_dataset/MaskedMinions/
+/generate_dataset/MaskedTowers/

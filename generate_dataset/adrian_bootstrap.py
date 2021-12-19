@@ -15,15 +15,15 @@ import random
 verbose = False
 # Important the leaf directories have to be called masked_champions, redMelee, masked_towers or you have to change add_object to write the object classes properly
 # Directory in which the masked object images are located
-masked_images_dir = "E:\\Adrian\\LeagueAI\\maskedChamps"
+masked_images_dir = "MaskedChamps"
 # Directory in which the masked minion images are located
-masked_minions = "E:\\Adrian\\LeagueAI\\maskedMinions"
+masked_minions = "MaskedMinions"
 # Directory in which the map backgrounds are located
 map_imags_dir = "map"
 # Directory in which the map backgrounds with fog of war are located
 map_fog_dir = "map"
 # Directory in which the tower images are located
-tower_dir = "E:\\Adrian\\LeagueAI\\maskedTowers"
+tower_dir = "MaskedTowers"
 # Directory in which the inhibs are located
 # inhib_dir = "masked_inhib"
 # Directory in which the nexuses are located
@@ -88,7 +88,7 @@ noise = (0,0,0)
 blur = True
 blur_strength = 0.6 # 0.6 is a good value
 # Sometimes randomly add the overlay
-overlay_chance = 0
+overlay_chance = 5
 overlay_path = "ui"
 # Add champion icons to overlay
 icon_path = "champion_icons"
@@ -100,7 +100,7 @@ cursor_scale = 0.4 #0.45 seems good
 cursor_random = 0.2
 cursor_path = "cursor"
 # Probability of adding a fog of war screenshot with no objects in it
-fog_of_war_prob = 0
+fog_of_war_prob = 5
 # Padding for the bias point (to keep the clustering of the minions from spawning minions outside of the image
 padding = 400 # 400 is good
 ########### Helper functions ###################
