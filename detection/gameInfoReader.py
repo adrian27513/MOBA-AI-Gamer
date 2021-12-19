@@ -28,7 +28,6 @@ while ret:
     # Get the current frame from either a video, a desktop region or webcam (for whatever reason)
     frame, ret = IO.get_pixels()
     if ret == True:
-        cv2.imshow('hi', frame)
         #Minions
         Mx1, My1, Mx2, My2 = 1775, 0, 1820, 30
         crop_minions = frame[My1:My2, Mx1:Mx2]

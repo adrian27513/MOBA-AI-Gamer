@@ -72,7 +72,7 @@ random_scale_minions = 0.2 # 0.25 good
 scale_towers = 2 # 1.6 good
 random_scale_towers = 0.2 # 0.2 good
 # Random rotation maximum offset in counter-/clockwise direction
-rotate = 5
+rotate = 7
 # Make champions seethrough sometimes to simulate them being in a brush, value in percent chance a champion will be seethrough
 seethrough_prob = 10
 # Output image size
