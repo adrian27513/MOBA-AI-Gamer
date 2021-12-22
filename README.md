@@ -1,1 +1,1 @@
-# LeagueAIYoloV5
+# LeagueHumanPlayerSim
