@@ -1,1 +1,1 @@
-# LeagueHumanPlayerSim
+# LeagueHumanPlayerAI
