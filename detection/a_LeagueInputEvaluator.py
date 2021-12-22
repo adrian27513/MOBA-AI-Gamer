@@ -5,7 +5,7 @@ from pathlib import Path
 
 import os
 import math
-from adrian_LeagueAI_helper import input_output
+from a_LeagueAI_helper import input_output
 import tesserocr
 from tesserocr import PyTessBaseAPI, PSM
 from PIL import Image

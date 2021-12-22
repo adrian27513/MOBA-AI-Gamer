@@ -1,4 +1,4 @@
-from adrian_LeagueAI_helper import input_output
+from a_LeagueAI_helper import input_output
 import tesserocr
 from tesserocr import PyTessBaseAPI, PSM
 from PIL import Image
@@ -16,7 +16,7 @@ pyautogui.FAILSAFE = True
 attributes = [0, 0, 0, 0]
 api = tesserocr.PyTessBaseAPI()
 
-model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\AdrianLeagueAIYoloV5\\yolov5', 'custom', path='LeagueAIWeights.pt', source='local')
+model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\AdrianLeagueAIYoloV5\\yolov5', 'custom', path='C:\\Users\\Adrian\\PycharmProjects\\AdrianLeagueAIYoloV5\\LeagueAIWeights.pt', source='local')
 
 model.conf = 0.6  # NMS confidence threshold
 model.iou = 0.45  # NMS IoU threshold
@@ -24,36 +24,24 @@ model.classes = [0,2,3,5,7,9,11,12,14,16,18]   # Remove dead classes
 model.multi_label = False  # NMS multiple labels per box
 model.max_det = 1000  # maximum number of detections per image
 
-# input = 'video'
-input = 'desktop'
-if input == 'video':
-    IO = input_output(input_mode='videofile', video_filename="AttributeDetection.mp4")
-elif input == 'desktop':
-    IO = input_output(input_mode='desktop', SCREEN_WIDTH=1920, SCREEN_HEIGHT=1080)
+
+IO = input_output(input_mode='desktop', SCREEN_WIDTH=1920, SCREEN_HEIGHT=1080)
 
 frame, ret = IO.get_pixels()
 while ret:
     # Get the current frame from either a video, a desktop region or webcam (for whatever reason)
     frame, ret = IO.get_pixels()
     if ret == True:
-        if input == 'video':
-            #Minions
-            Mx1, My1, Mx2, My2 = 1775, 0, 1820, 30
-            crop_minions = frame[My1:My2, Mx1:Mx2]
-            #KDA
-            Kx1, Ky1, Kx2, Ky2 = 1663, 0, 1718, 25
-            crop_kda = frame[Ky1:Ky2, Kx1:Kx2]
-        elif input == 'desktop':
-            Mx1, My1, Mx2, My2 = 1775, 0, 1820, 30
-            crop_minions = frame.crop((Mx1, My1, Mx2, My2))
-            Kx1, Ky1, Kx2, Ky2 = 1663, 0, 1718, 25
-            crop_kda = frame.crop((Kx1, Ky1, Kx2, Ky2))
+
+        Mx1, My1, Mx2, My2 = 1775, 0, 1820, 30
+        crop_minions = frame.crop((Mx1, My1, Mx2, My2))
+        Kx1, Ky1, Kx2, Ky2 = 1663, 0, 1718, 25
+        crop_kda = frame.crop((Kx1, Ky1, Kx2, Ky2))
 
         info = [crop_minions, crop_kda]
         for count, i in enumerate(info):
             image = i
-            if input == 'desktop':
-                image = np.array(image)
+            image = np.array(image)
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
@@ -80,11 +68,7 @@ while ret:
                     attributes[2] = attributes[2]
                     attributes[3] = attributes[3]
 
-        if input == 'video':
-            pil_img = Image.fromarray(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-            results = model(pil_img)  # custom inference size
-        elif input == 'desktop':
-            results = model(frame)
+        results = model(frame)
 
         object_results = results.pandas().xyxy[0]
         print(object_results)
