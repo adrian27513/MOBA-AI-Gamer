@@ -15,7 +15,7 @@ for i in champDirectory:
     # Input directory of images
     input_dir = mypath +"\\"+ i
     # Output directory of masked and cropped images
-    #output_dir = "C:/Users/Adrian/PycharmProjects/AdrianLeagueAI/generate_dataset/masked_champ//" + champ + "//" + i
+    #output_dir = "C:/Users/Adrian/PycharmProjects/LeagueHumanPlayerAI/generate_dataset/masked_champ//" + champ + "//" + i
     output_dir = "E:\\Adrian\\LeagueAI\\MaskedChamps\\" + i
     print("Creating new directory for output: {}".format(output_dir))
 

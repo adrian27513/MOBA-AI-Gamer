@@ -19,7 +19,7 @@ import torch
 attributes = [0, 0, 0, 0]
 api = tesserocr.PyTessBaseAPI()
 
-model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\AdrianLeagueAIYoloV5\\yolov5', 'custom', path='LeagueAIWeights.pt', source='local')
+model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\yolov5', 'custom', path='C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\LeagueAIWeights.pt', source='local')
 
 model.conf = 0.6  # NMS confidence threshold
 model.iou = 0.45  # NMS IoU threshold
@@ -89,12 +89,30 @@ while ret:
         elif input == 'desktop':
             results = model(frame)
 
+        print(results)
         object_results = results.pandas().xyxy[0]
+        results_object = results.xyxy[0]
+
+        newObs = torch.zeros(10,6)
+        obsShape = list(results_object.shape)
+        newObs[:obsShape[0], :6] = results_object
+        print(newObs)
+        count = 0
         print(object_results)
-        print(attributes)
-        print('ezreal' in object_results.values)
-        ezreal_idx = object_results.index[object_results['name']=='ezreal'].tolist()
-        center = [(object_results['xmin'][ezreal_idx[0]] + object_results['xmax'][ezreal_idx[0]]) / 2,
-                  (object_results['ymin'][ezreal_idx[0]] + object_results['ymax'][ezreal_idx[0]]) / 2]
-        print(center)
+        try:
+            count += object_results['name'].value_counts()['red_melee']
+            count += object_results['name'].value_counts()['red_ranged']
+            count += object_results['name'].value_counts()['red_siege']
+            count += object_results['name'].value_counts()['red_super']
+        except:
+            count += 0
+        print(count)
+
+        # print(object_results)
+        # print(attributes)
+        # print('ezreal' in object_results.values)
+        # ezreal_idx = object_results.index[object_results['name']=='ezreal'].tolist()
+        # center = [(object_results['xmin'][ezreal_idx[0]] + object_results['xmax'][ezreal_idx[0]]) / 2,
+        #           (object_results['ymin'][ezreal_idx[0]] + object_results['ymax'][ezreal_idx[0]]) / 2]
+        # print(center)
 

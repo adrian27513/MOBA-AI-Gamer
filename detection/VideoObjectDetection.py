@@ -15,7 +15,7 @@ import time
 import cv2
 import torch
 
-model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\AdrianLeagueAIYoloV5\\yolov5', 'custom', path='LeagueAIWeights.pt', source='local')
+model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\yolov5', 'custom', path='LeagueAIWeights.pt', source='local')
 
 model.conf = 0.7  # NMS confidence threshold
 model.iou = 0.45  # NMS IoU threshold

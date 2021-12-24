@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/LeagueHumanPlayerSim.iml" filepath="$PROJECT_DIR$/.idea/LeagueHumanPlayerSim.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/LeagueHumanPlayerAI.iml" filepath="$PROJECT_DIR$/.idea/LeagueHumanPlayerAI.iml" />
     </modules>
   </component>
 </project>
