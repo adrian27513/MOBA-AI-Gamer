@@ -1,5 +1,5 @@
 # MOBA AI Gamer
-MOBA AI Gamer to train a model to play multiplayer video games (League of Legends) as human players. It is my personal deep dive project into machine learning topics in computer vision, neural networks model building, and reinforcement learning.  
+MOBA AI Gamer trains a model to play multiplayer video games (League of Legends) like human players. It is my personal deep dive project into machine learning topics in computer vision, neural networks model building, and reinforcement learning.  
 
 This project was inspired by Oliver Struckmeier’s [LeagueAI project](https://github.com/Oleffa/LeagueAI) and uses his automated training data methodology outlined in his [paper](https://arxiv.org/pdf/1905.13546.pdf) on the subject.
 
