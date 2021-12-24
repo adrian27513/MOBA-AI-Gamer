@@ -1,10 +1,10 @@
-# LeagueHumanPlayerAI
-LeagueHumanPlayerAI to train a model to play multiplayer video games (League of Legends) as human players. It is my personal deep dive project into machine learning topics in computer vision, neural networks model building, and reinforcement learning.  
+# MOBA AI Gamer
+MOBA AI Gamer to train a model to play multiplayer video games (League of Legends) as human players. It is my personal deep dive project into machine learning topics in computer vision, neural networks model building, and reinforcement learning.  
 
 This project was inspired by Oliver Struckmeier’s [LeagueAI project](https://github.com/Oleffa/LeagueAI) and uses his automated training data methodology outlined in his [paper](https://arxiv.org/pdf/1905.13546.pdf) on the subject.
 
 ## Method
-LeagueHumanPlayerAI simulates how a human would interact and play with League of Legends through analyzing a screen to identify game objects and make basic strategy decisions and perform actions based on the information. To do this LeagueHumanPlayerAI combines:
+MOBA AI Gamer simulates how a human would interact and play with League of Legends through analyzing a screen to identify game objects and make basic strategy decisions and perform actions based on the information. To do this LeagueHumanPlayerAI combines:
 - **Object Detection** | [YoloV5](https://github.com/ultralytics/yolov5)
 - **Optical Character Recognition** | [Tesseract/TesserOCR](https://github.com/sirfz/tesserocr)
 - **Reinforcement Learning** | [OpenAI Gym](https://github.com/openai/gym) & [PFRL](https://github.com/pfnet/pfrl)
