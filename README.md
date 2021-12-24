@@ -24,7 +24,8 @@ LeagueHumanPlayerAI simulates how a human would interact and play with League of
 To detect objects on screen LeagueHumanPlayerAI uses YoloV5 to identify and locate 20 objects on screen.
 - **mAP@0.5:** 0.83
 - **mAP@[0.5:0.95]:** 0.61
-### Detectable Objects
+
+### Detectable Objects:
 1. Ezreal
 2. Ezreal Dead
 3. Red Tower
@@ -45,13 +46,47 @@ To detect objects on screen LeagueHumanPlayerAI uses YoloV5 to identify and loca
 18. Blue Siege Minion Dead
 19. Blue Super Minion
 20. Blue Super Minion Dead
-### Dataset Generation
+
+### Dataset Generation:
 3D models of each of the 11 unique objects and its animations were extracted from the League of Legends client using [LeagueBulkConvert](https://github.com/Jochem-W/LeagueBulkConvert). Due to an animation bug with the red ranged minion model, both blue and red ranged minions are the same model (blue ranged minion) with different skin colors. 
 
 Once the 3D models were obtained, a video was recorded of each model rotating with a viewpoint approximately the same as in game (~55 degrees above front view). Then using modified versions of Oliver Struckmeirer's data generation code, generated dataset images were generated for object detection training.
-### TODO
+### TODO:
 - Add more objects
-  - More Champions and related pets
+  - Champions and related pets
   - Jungle Monsters
   - Inhibitors (Red and Blue)
   - Nexus (Red and Blue)
+- Improve Dataset Generation Quality
+- Increase Object Detection Accuracy
+
+## Attribute Observation
+Cropping the screen and using Tesseract, attribute information like minion count and kills can be tracked.
+
+### Tracked Attributes
+1. Minion Count
+2. Kills
+3. Deaths
+4. Assists
+
+### TODO:
+- Add more attributes
+  - Health
+  - Mana
+  - Gold
+  - Level
+  - Selected target's health
+
+## Gameplay Learning
+Currently a work in progress creating a reinforcement learning model
+- **Plan:** Use Deep Q-Learning to train an intelligent agent to play League of Legends
+
+### Hard-Coded Gameplay Logic
+A combination of both object detection and attribute observation to attack and use a random ability on the first red melee minion seen is working.
+
+### TODO:
+- Create a Deep Q-Learning algorithm
+- Train an agent to play
+
+## Team Play
+TODO
