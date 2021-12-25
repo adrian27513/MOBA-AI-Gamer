@@ -2,7 +2,7 @@ import os
 import glob
 from os import listdir
 
-dataPath = "C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\data"
+dataPath = "C:\\Users\\Adrian\\PycharmProjects\\MOBAAIGamer\\data"
 dataFolders = listdir(dataPath)
 
 for d in dataFolders:

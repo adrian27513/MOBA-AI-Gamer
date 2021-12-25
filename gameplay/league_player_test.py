@@ -16,7 +16,7 @@ pyautogui.FAILSAFE = True
 attributes = [0, 0, 0, 0]
 api = tesserocr.PyTessBaseAPI()
 
-model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\yolov5', 'custom', path='C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\LeagueAIWeights.pt', source='local')
+model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\MOBAAIGamer\\yolov5', 'custom', path='C:\\Users\\Adrian\\PycharmProjects\\MOBAAIGamer\\LeagueAIWeights.pt', source='local')
 
 model.conf = 0.6  # NMS confidence threshold
 model.iou = 0.45  # NMS IoU threshold

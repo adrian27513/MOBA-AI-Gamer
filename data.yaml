@@ -22,5 +22,5 @@ names:
 nc: 20
 train: /content/LeagueAIYoloV5/data/images/train
 val: /content/LeagueAIYoloV5/data/images/valid
-#train: C:/Users/Adrian/PycharmProjects/LeagueHumanPlayerAI/data/images/train
-#val: C:/Users/Adrian/PycharmProjects/LeagueHumanPlayerAI/data/images/valid
+#train: C:/Users/Adrian/PycharmProjects/MOBAAIGamer/data/images/train
+#val: C:/Users/Adrian/PycharmProjects/MOBAAIGamer/data/images/valid

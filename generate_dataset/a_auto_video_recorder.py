@@ -33,12 +33,12 @@ def reset_properties():
 
 def chooseAnimation():
     animationLocation = pyautogui.locateOnScreen(
-        'C:\\Users\Adrian\PycharmProjects\LeagueHumanPlayerAI\generate_dataset\AnimationLogo.PNG')
+        'MOBAAIGamer\\generate_dataset\AnimationLogo.PNG')
     animationCenter = pyautogui.center(animationLocation)
     pyautogui.click(animationCenter)
     time.sleep(1)
     animation = list(pyautogui.locateAllOnScreen(
-        'C:\\Users\Adrian\PycharmProjects\LeagueHumanPlayerAI\generate_dataset\AnimationModel.PNG'))
+        'MOBAAIGamer\\generate_dataset\AnimationModel.PNG'))
     pyautogui.click(1870, 920)
     for x in animation:
         pyautogui.click(animationCenter)

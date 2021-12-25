@@ -19,9 +19,9 @@ class LeagueEnv (gym.Env):
 
         api = tesserocr.PyTessBaseAPI()
 
-        self.model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\yolov5', 'custom',
-                               path='C:\\Users\\Adrian\\PycharmProjects\\LeagueHumanPlayerAI\\LeagueAIWeights.pt',
-                               source='local')
+        self.model = torch.hub.load('C:\\Users\\Adrian\\PycharmProjects\\MOBAAIGamer\\yolov5', 'custom',
+                                    path='C:\\Users\\Adrian\\PycharmProjects\\MOBAAIGamer\\LeagueAIWeights.pt',
+                                    source='local')
 
         self.model.conf = 0.6  # NMS confidence threshold
         self.model.iou = 0.45  # NMS IoU threshold
@@ -37,8 +37,6 @@ class LeagueEnv (gym.Env):
 
     def step(self, action):
         if self.action_space.contains(action):
-            obs, att = self.getObservation()
-            reward = self.reward(obs, att)
             buttonPress = action[0]
             moveLocX = int(action[1][0] * 1920)
             moveLocY = int(action[1][1] * 1080)
@@ -70,8 +68,15 @@ class LeagueEnv (gym.Env):
             elif buttonPress == 5:
                 print("do nothing")
 
+            obs, att = self.getObservation()
+            reward, done = self.reward(obs, att)
+
+            newObs = torch.zeros([100, 6])
+
+            newObs[:obs[0], :6] = obs.xyxy[0]
+            return newObs, reward, done
+
     def reset(self):
-        # print('reset')
         # Reset
         pydirectinput.keyDown('ctrl')
         pydirectinput.keyDown('shift')
@@ -89,6 +94,13 @@ class LeagueEnv (gym.Env):
         pydirectinput.press('e')
         pydirectinput.press('r')
         pydirectinput.keyUp('ctrl')
+
+        obs, _ = self.getObservation()
+        newObs = torch.zeros([100, 6])
+
+        newObs[:obs[0], :6] = obs.xyxy[0]
+        return newObs
+
 
     def getObservation(self):
         frame = ImageGrab.grab()
@@ -132,4 +144,49 @@ class LeagueEnv (gym.Env):
         return results, outputAttributes
 
     def reward(self, obs, att):
-        print('hi')
+        inM = att[0]
+        inK = att[1]
+        inD = att[2]
+        inA = att[3]
+        reward = 0
+        done = False
+        object_results = obs.pandas().xyxy[0]
+        count = 0
+
+        try:
+            count += object_results['name'].value_counts()['red_melee']
+        except:
+            count += 0
+
+        try:
+            count += object_results['name'].value_counts()['red_ranged']
+        except:
+            count += 0
+
+        try:
+            count += object_results['name'].value_counts()['red_siege']
+        except:
+            count += 0
+
+        try:
+            count += object_results['name'].value_counts()['red_super']
+        except:
+            count += 0
+
+        reward += count * 0.5
+
+        if inM > self.attributes[0]:
+            reward += inM * 20
+            self.attributes[0] = inM
+        if inK > self.attributes[1]:
+            reward += inK * 300
+            self.attributes[1] = inK
+        if inD > self.attributes[2]:
+            reward += -300
+            self.attributes[2] = inD
+            done = True
+        if inA > self.attributes[3]:
+            reward += 80
+            self.attributes[3] = inA
+
+        return reward, done
