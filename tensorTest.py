@@ -1,10 +1,16 @@
 import torch
 from gym import spaces
 import numpy as np
+import time
 
-
-print(5 == 4 or 3 or 2)
-print(5 == 5)
+t1 = time.time()
+time.sleep(5)
+t2 = time.time()
+print(t2-t1)
+# print(torch.full((2,3), 5))
+#
+# print(5 == 4 or 3 or 2)
+# print(5 == 5)
 
 # space = spaces.MultiDiscrete([6,1920,1080])
 # output = space.sample()

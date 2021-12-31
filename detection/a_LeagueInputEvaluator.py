@@ -92,7 +92,8 @@ while ret:
         print(results)
         object_results = results.pandas().xyxy[0]
         results_object = results.xyxy[0]
-
+        print("results:")
+        print(results.xyxy[0])
         newObs = torch.zeros(10,6)
         obsShape = list(results_object.shape)
         newObs[:obsShape[0], :6] = results_object

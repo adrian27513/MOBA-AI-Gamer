@@ -9,11 +9,10 @@ import pydirectinput
 import tesserocr
 import cv2
 
-
+OBS_SIZE = 500
 class LeagueEnv (gym.Env):
     def __init__(self):
         super(LeagueEnv, self).__init__()
-
         # Minions  Kills  Deaths  Assists
         self.attributes = [0, 0, 0, 0]
 
@@ -27,24 +26,24 @@ class LeagueEnv (gym.Env):
         self.model.iou = 0.45  # NMS IoU threshold
         self.model.classes = [0, 2, 3, 5, 7, 9, 11, 12, 14, 16, 18]  # Remove dead classes
         self.model.multi_label = False  # NMS multiple labels per box
-        self.model.max_det = 50  # maximum number of detections per image
+        self.model.max_det = OBS_SIZE  # maximum number of detections per image
 
         # (Q, W, E, R, Right-Click), Move Mouse
-        self.action_space = spaces.Tuple((spaces.Discrete(6),spaces.Box(low=0, high=1, shape=[2,1],dtype=np.float32)))
+        self.action_space = spaces.MultiDiscrete([5,1918,1078])
 
         # Object detection output
-        self.observation_space = spaces.Box(low=0, high=4000, shape=[100,6], dtype=np.float32)
+        self.observation_space = spaces.Box(low=0, high=4000, shape=[OBS_SIZE,30], dtype=np.float32)
 
     def step(self, action):
         if self.action_space.contains(action):
             buttonPress = action[0]
-            moveLocX = int(action[1][0] * 1920)
-            moveLocY = int(action[1][1] * 1080)
+            moveLocX = action[1] + 1
+            moveLocY = action[2] + 1
 
-            #Move Mouse
+            # Move Mouse
             pyautogui.moveTo(x=moveLocX, y=moveLocY)
 
-            #Press Buttons
+            # Press Buttons
             if buttonPress == 0:
                 # Press Q
                 pydirectinput.press('q')
@@ -65,19 +64,19 @@ class LeagueEnv (gym.Env):
                 # Right-Click
                 pyautogui.click(button='right')
                 # print('click')
-            elif buttonPress == 5:
-                print("do nothing")
+        obs, att = self.getObservation()
+        reward, done = self.reward(obs, att)
 
-            obs, att = self.getObservation()
-            reward, done = self.reward(obs, att)
+        newObs = torch.zeros(OBS_SIZE, 30)
+        results_object = obs.xyxy[0]
+        obsShape = list(results_object.shape)
+        newObs[:obsShape[0], :6] = results_object
 
-            newObs = torch.zeros([100, 6])
-
-            newObs[:obs[0], :6] = obs.xyxy[0]
-            return newObs, reward, done
+        return newObs, reward, done, {}
 
     def reset(self):
         # Reset
+        pyautogui.mouseUp(button='right')
         pydirectinput.keyDown('ctrl')
         pydirectinput.keyDown('shift')
         pydirectinput.keyDown('p')
@@ -95,16 +94,19 @@ class LeagueEnv (gym.Env):
         pydirectinput.press('r')
         pydirectinput.keyUp('ctrl')
 
-        obs, _ = self.getObservation()
-        newObs = torch.zeros([100, 6])
+        self.attributes = [0,0,0,0]
 
-        newObs[:obs[0], :6] = obs.xyxy[0]
+        obs, _ = self.getObservation()
+        results_object = obs.xyxy[0]
+        newObs = torch.zeros(OBS_SIZE, 30)
+        obsShape = list(results_object.shape)
+        newObs[:obsShape[0], :6] = results_object
         return newObs
 
 
     def getObservation(self):
         frame = ImageGrab.grab()
-        outputAttributes = self.attributes
+        outputAttributes = self.attributes.copy()
         Mx1, My1, Mx2, My2 = 1775, 0, 1820, 30
         crop_minions = frame.crop((Mx1, My1, Mx2, My2))
         Kx1, Ky1, Kx2, Ky2 = 1663, 0, 1718, 25
@@ -112,8 +114,7 @@ class LeagueEnv (gym.Env):
 
         info = [crop_minions, crop_kda]
         for count, i in enumerate(info):
-            image = i
-            image = np.array(image)
+            image = np.array(i)
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)[1]
 
@@ -153,6 +154,20 @@ class LeagueEnv (gym.Env):
         object_results = obs.pandas().xyxy[0]
         count = 0
 
+        if inM > self.attributes[0]:
+            reward += inM * 20
+            self.attributes[0] = inM
+        if inK > self.attributes[1]:
+            reward += inK * 300
+            self.attributes[1] = inK
+        if inD > self.attributes[2]:
+            done = True
+            reward += -300
+            self.attributes[2] = inD
+        if inA > self.attributes[3]:
+            reward += 80
+            self.attributes[3] = inA
+
         try:
             count += object_results['name'].value_counts()['red_melee']
         except:
@@ -174,19 +189,5 @@ class LeagueEnv (gym.Env):
             count += 0
 
         reward += count * 0.5
-
-        if inM > self.attributes[0]:
-            reward += inM * 20
-            self.attributes[0] = inM
-        if inK > self.attributes[1]:
-            reward += inK * 300
-            self.attributes[1] = inK
-        if inD > self.attributes[2]:
-            reward += -300
-            self.attributes[2] = inD
-            done = True
-        if inA > self.attributes[3]:
-            reward += 80
-            self.attributes[3] = inA
 
         return reward, done
