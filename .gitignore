@@ -8,4 +8,5 @@
 /generate_dataset/MaskedChamps/
 /generate_dataset/MaskedMinions/
 /generate_dataset/MaskedTowers/
-/runs/
+/LeagueAIWeights.pt
+/LeagueAIWeights.pt

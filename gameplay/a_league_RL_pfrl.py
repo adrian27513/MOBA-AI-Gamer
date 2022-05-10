@@ -60,7 +60,7 @@ class QFunction(torch.nn.Module):
 
 obs_size = 6
 n_actions = 3
-# q_func = QFunction(obs_size, n_actions)
+q_func = QFunction(obs_size, n_actions)
 
 q_func2 = torch.nn.Sequential(
     torch.nn.Linear(obs_size, 50),
@@ -72,7 +72,7 @@ q_func2 = torch.nn.Sequential(
 )
 
 # Use Adam to optimize q_func. eps=1e-2 is for stability.
-optimizer = torch.optim.Adam(q_func2.parameters(), eps=1e-2)
+optimizer = torch.optim.Adam(q_func.parameters(), eps=1e-2)
 
 # Set the discount factor that discounts future rewards.
 gamma = 0.9
@@ -87,7 +87,7 @@ replay_buffer = pfrl.replay_buffers.ReplayBuffer(capacity=10 ** 6)
 
 # Now create an agent that will interact with the environment.
 agent = pfrl.agents.DoubleDQN(
-    q_func2,
+    q_func,
     optimizer,
     replay_buffer,
     gamma,
@@ -99,10 +99,8 @@ agent = pfrl.agents.DoubleDQN(
     gpu=0
 )
 
-agent.load('agent')
-
 n_episodes = 300
-max_episode_len = 600
+max_episode_len = 1000
 t_start = time.time()
 t1 = time.time()
 reset = False
@@ -115,21 +113,20 @@ for i in range(1, n_episodes + 1):
         # env.render()
         action = agent.act(obs)
         obs, reward, done, _ = env.step(action)
-        R += reward + 1
+        R += reward
         t += 1
         reset = t == max_episode_len
+        t2 = time.time()
+        if t2 - t1 >= 3480:
+            done = True
         agent.observe(obs, reward, done, reset)
         if done or reset:
             break
-        t2 = time.time()
-        if t2 - t1 >= 3480:
-            break
     print('episode:', i, 'R:', R)
 
-    if i % 10 == 0:
-        agent.save('agent')
     if i % 5 == 0:
         print('statistics:', agent.get_statistics())
+        agent.save('agent')
     t3 = time.time()
     if t3 - t1 >= 3480:
         winGame()
@@ -139,10 +136,4 @@ for i in range(1, n_episodes + 1):
         t1 = time.time()
     if t3 - t_start > 43200:
         break
-agent.save('agent')
 print('Finished.')
-
-
-
-
-

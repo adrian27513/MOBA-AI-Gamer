@@ -8,6 +8,7 @@ import pyautogui
 import pydirectinput
 import tesserocr
 import cv2
+import time
 
 OBS_SIZE = 500
 class LeagueEnv (gym.Env):
@@ -23,16 +24,19 @@ class LeagueEnv (gym.Env):
                                     source='local')
 
         self.model.conf = 0.6  # NMS confidence threshold
-        self.model.iou = 0.45  # NMS IoU threshold
+        self.model.iou = 0.5  # NMS IoU threshold
         self.model.classes = [0, 2, 3, 5, 7, 9, 11, 12, 14, 16, 18]  # Remove dead classes
         self.model.multi_label = False  # NMS multiple labels per box
         self.model.max_det = OBS_SIZE  # maximum number of detections per image
 
         # (Q, W, E, R, Right-Click), Move Mouse
-        self.action_space = spaces.MultiDiscrete([5,1918,1078])
+        self.action_space = spaces.MultiDiscrete([6,1918,1078])
+
+        low = np.zeros((50,6))
+        high = 4000 * np.ones((50, 6))
 
         # Object detection output
-        self.observation_space = spaces.Box(low=0, high=4000, shape=[OBS_SIZE,30], dtype=np.float32)
+        self.observation_space = spaces.Box(low=low, high=high, dtype=np.float32)
 
     def step(self, action):
         if self.action_space.contains(action):
@@ -64,15 +68,18 @@ class LeagueEnv (gym.Env):
                 # Right-Click
                 pyautogui.click(button='right')
                 # print('click')
+                pyautogui.mouseUp(button='right')
+            # If 5 do nothing
         obs, att = self.getObservation()
         reward, done = self.reward(obs, att)
 
-        newObs = torch.zeros(OBS_SIZE, 30)
         results_object = obs.xyxy[0]
-        obsShape = list(results_object.shape)
-        newObs[:obsShape[0], :6] = results_object
+        if results_object.shape[0] == 0:
+            results_object = np.zeros((1,6), dtype=np.float32)
+        self.observation_space.low = np.zeros(results_object.shape, dtype=np.float32)
+        self.observation_space.high = 4000 * np.ones(results_object.shape, dtype=np.float32)
 
-        return newObs, reward, done, {}
+        return results_object, reward, done, {}
 
     def reset(self):
         # Reset
@@ -86,6 +93,7 @@ class LeagueEnv (gym.Env):
         pydirectinput.keyDown('shift')
         pydirectinput.press('y', presses=5)
         pydirectinput.press('c')
+        pydirectinput.press('u')
         pydirectinput.keyUp('shift')
         pydirectinput.keyDown('ctrl')
         pydirectinput.press('q', presses=3)
@@ -94,14 +102,19 @@ class LeagueEnv (gym.Env):
         pydirectinput.press('r')
         pydirectinput.keyUp('ctrl')
 
+        pyautogui.rightClick(1710, 900)
+        pyautogui.mouseUp(button='right')
+        time.sleep(85)
+
         self.attributes = [0,0,0,0]
 
         obs, _ = self.getObservation()
         results_object = obs.xyxy[0]
-        newObs = torch.zeros(OBS_SIZE, 30)
-        obsShape = list(results_object.shape)
-        newObs[:obsShape[0], :6] = results_object
-        return newObs
+        if results_object.shape[0] == 0:
+            results_object = np.zeros((1,6), dtype=np.float32)
+        self.observation_space.low = np.zeros(results_object.shape, dtype=np.float32)
+        self.observation_space.high = 4000 * np.ones(results_object.shape, dtype=np.float32)
+        return results_object
 
 
     def getObservation(self):

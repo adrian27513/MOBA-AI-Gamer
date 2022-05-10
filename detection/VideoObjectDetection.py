@@ -44,4 +44,11 @@ while ret:
 
         object_results = results.pandas().xyxy[0]
         print(object_results)
+        object_results = object_results.assign(xmid=(object_results['xmin'] + object_results['xmax']) / 2)
+        object_results = object_results.assign(ymid=(object_results['ymin'] + object_results['ymax']) / 2)
+        object_results = object_results.drop(columns=['xmin','xmax','ymin','ymax','name'])
+        print(object_results)
+        print((torch.tensor(object_results.values)))
+        # if object_results.shape[0] == 0:
+        #     print("hi")
         # print(object_results.get('xmin')[0])

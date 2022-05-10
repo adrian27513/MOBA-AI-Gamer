@@ -48,12 +48,12 @@ output_dir = "output"
 # Prints a box around the placed object in red (for debug purposes)
 print_box = False
 # Size of the datasets the program should generate
-dataset_size = 11000
+dataset_size = 4000
 # Beginning index for naming output files
 start_index = 0
 # How many characters should be added minimum/maximum to each sample
 characters_min = 1
-characters_max = 3
+characters_max = 2
 assert (characters_min <= characters_max), "Error, characters_max needs to be larger than minions_min!"
 # How many minions should be added minimum/maximum to each sample
 minions_min = 3
@@ -61,7 +61,7 @@ minions_max = 7
 assert (minions_min <= minions_max), "Error, minions_max needs to be larger than minions_min!"
 # How many towers should be added to each example
 towers_min = 0
-towers_max = 3
+towers_max = 2
 assert (towers_min <= towers_max), "Error, towers_max needs to be larger than towers_min!"
 # The scale factor of how much a champion image needs to be scaled to have a realistic size
 # Also you can set a random factor to create more diverse images
@@ -72,7 +72,7 @@ random_scale_minions = 0.2 # 0.25 good
 scale_towers = 2 # 1.6 good
 random_scale_towers = 0.2 # 0.2 good
 # Random rotation maximum offset in counter-/clockwise direction
-rotate = 7
+rotate = 10
 # Make champions seethrough sometimes to simulate them being in a brush, value in percent chance a champion will be seethrough
 seethrough_prob = 10
 # Output image size
@@ -100,7 +100,7 @@ cursor_scale = 0.4 #0.45 seems good
 cursor_random = 0.2
 cursor_path = "cursor"
 # Probability of adding a fog of war screenshot with no objects in it
-fog_of_war_prob = 5
+fog_of_war_prob = 0
 # Padding for the bias point (to keep the clustering of the minions from spawning minions outside of the image
 padding = 400 # 400 is good
 ########### Helper functions ###################
